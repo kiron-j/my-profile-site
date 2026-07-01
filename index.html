@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>곽준철 - UX/UI Designer Portfolio</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+        }
+
+        :root {
+            --bg-primary: #0d0d12;
+            --bg-secondary: #1a1a23;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --accent: #3b82f6;
+            --accent-dark: #1e40af;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        .section-label {
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: var(--accent);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .nav-link {
+            position: relative;
+            text-decoration: none;
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .stat-card {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 8px;
+        }
+
+        .skill-tag {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: var(--bg-secondary);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 6px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin: 6px 6px 6px 0;
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        .experience-card {
+            padding: 24px;
+            background-color: var(--bg-secondary);
+            border-left: 3px solid var(--accent);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .experience-card:hover {
+            transform: translateX(8px);
+        }
+
+        .experience-date {
+            font-size: 12px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .experience-company {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .experience-role {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .experience-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 28px;
+            background-color: var(--accent);
+            color: white;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            background-color: var(--accent-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+        }
+
+        .hero-profile {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, var(--accent), #6366f1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 120px;
+            color: rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 70px;
+            right: 0;
+            width: 100%;
+            background-color: var(--bg-secondary);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+            z-index: 40;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mobile-menu a {
+            padding: 16px 24px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--text-primary);
+            background-color: rgba(59, 130, 246, 0.05);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background-color: var(--text-primary);
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(10px, 10px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(10px, -10px);
+        }
+
+        @media (max-width: 768px) {
+            .nav-desktop {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero-profile {
+                width: 200px;
+                height: 200px;
+                font-size: 80px;
+            }
+
+            .stat-number {
+                font-size: 36px;
+            }
+
+            h1 {
+                font-size: 36px !important;
+            }
+
+            h2 {
+                font-size: 24px !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-[#0d0d12]">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-[#0d0d12]/95 backdrop-blur-md border-b border-white/5 z-50">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 py-6 flex justify-between items-center">
+            <a href="#home" class="text-2xl font-bold text-white">JK</a>
+
+            <div class="nav-desktop flex gap-8">
+                <a href="#about" class="nav-link text-sm">About</a>
+                <a href="#skills" class="nav-link text-sm">Skills</a>
+                <a href="#experience" class="nav-link text-sm">Experience</a>
+                <a href="#contact" class="nav-link text-sm">Contact</a>
+            </div>
+
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#about" class="scroll-link">About</a>
+            <a href="#skills" class="scroll-link">Skills</a>
+            <a href="#experience" class="scroll-link">Experience</a>
+            <a href="#contact" class="scroll-link">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center pt-20 pb-10 px-6 lg:px-12">
+        <div class="max-w-7xl w-full grid lg:grid-cols-2 gap-12 items-center">
+            <div class="fade-in">
+                <div class="inline-block mb-6">
+                    <span class="section-label">/ 안녕하세요</span>
+                </div>
+
+                <h1 class="text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+                    곽준철
+                </h1>
+
+                <p class="text-2xl text-gray-400 mb-6 font-light">
+                    UX/UI Designer
+                </p>
+
+                <p class="text-lg text-gray-500 mb-8 leading-relaxed max-w-lg">
+                    사람 중심의 경험을 설계하는 UX/UI 디자이너입니다. 10년 이상의 서비스 기획 및 UI 설계 경험을 바탕으로 직관적이고 가치 있는 디지털 경험을 만듭니다.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 mb-12">
+                    <button class="cta-button" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">
+                        연락하기
+                    </button>
+                    <a href="#experience" class="nav-link text-sm px-6 py-3 border border-blue-400/30 rounded-md hover:border-blue-400">
+                        경력 보기
+                    </a>
+                </div>
+
+                <div class="flex gap-6">
+                    <a href="mailto:oph_7@naver.com" class="text-gray-500 hover:text-blue-400 transition" title="Email">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        </svg>
+                    </a>
+                    <a href="tel:01077913933" class="text-gray-500 hover:text-blue-400 transition" title="Phone">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.92 7.02C17.45 6.18 16.51 5.55 15.43 5.55c-1.08 0-2.02.63-2.49 1.47C12.04 5.56 10.16 4.5 8 4.5c-4.42 0-8 3.58-8 8s3.58 8 8 8c2.16 0 4.04-1.06 5.19-2.68.47.84 1.4 1.47 2.49 1.47 1.08 0 2.02-.63 2.49-1.47C19.29 16.93 20 15.54 20 14c0-1.54-.71-2.93-1.81-3.98zM8 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5zm8-1c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="fade-in hidden lg:flex justify-center">
+                <div class="hero-profile">
+                    <span>👨‍💼</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-6 lg:px-12 border-t border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-16 fade-in">
+                <span class="section-label">/ 소개</span>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12">
+                <div class="fade-in">
+                    <h2 class="text-4xl font-bold text-white mb-6">
+                        경험으로 만드는<br/>가치 있는 경험
+                    </h2>
+
+                    <p class="text-lg text-gray-500 leading-relaxed mb-6">
+                        네트워크 보안 통제 플랫폼, 마이크로모빌리티 서비스, 핀테크, 콘텐츠 플랫폼 등 다양한 도메인에서 사용자 중심의 디자인을 추진했습니다.
+                    </p>
+
+                    <p class="text-lg text-gray-500 leading-relaxed">
+                        협업을 통한 문제 해결, 데이터 기반의 설계 결정, 사용자 리서치로 검증된 UI/UX 개선이 제 핵심 역량입니다.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-3 gap-8">
+                    <div class="stat-card fade-in">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">Years of Experience</div>
+                    </div>
+
+                    <div class="stat-card fade-in">
+                        <div class="stat-number">6</div>
+                        <div class="stat-label">Companies</div>
+                    </div>
+
+                    <div class="stat-card fade-in">
+                        <div class="stat-number">1000+</div>
+                        <div class="stat-label">Team Collaborators</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 px-6 lg:px-12 border-t border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-16 fade-in">
+                <span class="section-label">/ 스킬</span>
+                <h2 class="text-4xl font-bold text-white mt-4">내 역량</h2>
+            </div>
+
+            <div class="space-y-12">
+                <div class="fade-in">
+                    <h3 class="text-sm font-semibold text-blue-400 mb-4 uppercase tracking-wide">Design Tools</h3>
+                    <div>
+                        <span class="skill-tag">Figma</span>
+                        <span class="skill-tag">Zeplin</span>
+                        <span class="skill-tag">Prototyping</span>
+                        <span class="skill-tag">After Effects</span>
+                    </div>
+                </div>
+
+                <div class="fade-in">
+                    <h3 class="text-sm font-semibold text-blue-400 mb-4 uppercase tracking-wide">Development</h3>
+                    <div>
+                        <span class="skill-tag">HTML / CSS</span>
+                        <span class="skill-tag">JavaScript</span>
+                    </div>
+                </div>
+
+                <div class="fade-in">
+                    <h3 class="text-sm font-semibold text-blue-400 mb-4 uppercase tracking-wide">Collaboration & Strategy</h3>
+                    <div>
+                        <span class="skill-tag">Service Planning</span>
+                        <span class="skill-tag">User Research</span>
+                        <span class="skill-tag">Design System</span>
+                        <span class="skill-tag">Cross-functional Leadership</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20 px-6 lg:px-12 border-t border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-16 fade-in">
+                <span class="section-label">/ 경력</span>
+                <h2 class="text-4xl font-bold text-white mt-4">Work Experience</h2>
+            </div>
+
+            <div class="space-y-6">
+                <div class="experience-card fade-in">
+                    <div class="experience-date">2025.06 ~ Present</div>
+                    <div class="experience-company">유닉솔루션</div>
+                    <div class="experience-role">과장</div>
+                    <div class="experience-desc">
+                        T-Collaborator UX 설계, PM3 서비스 UI 개선
+                    </div>
+                </div>
+
+                <div class="experience-card fade-in">
+                    <div class="experience-date">2023.12 ~ 2025.02</div>
+                    <div class="experience-company">고령군 문화관광재단</div>
+                    <div class="experience-role">팀장</div>
+                    <div class="experience-desc">
+                        프론트엔드 및 UX/UI 전반 담당
+                    </div>
+                </div>
+
+                <div class="experience-card fade-in">
+                    <div class="experience-date">2018.02 ~ 2023.01</div>
+                    <div class="experience-company">동양이터넷 (카카오 IT)</div>
+                    <div class="experience-role">과장</div>
+                    <div class="experience-desc">
+                        서비스 UX 리서치 및 UI/UX 설계 (5년)
+                    </div>
+                </div>
+
+                <div class="experience-card fade-in">
+                    <div class="experience-date">2017.05 ~ 2018.01</div>
+                    <div class="experience-company">비디오스</div>
+                    <div class="experience-role">Designer</div>
+                    <div class="experience-desc">
+                        웹 서비스 콘셉트 기획 및 사용성 테스트
+                    </div>
+                </div>
+
+                <div class="experience-card fade-in">
+                    <div class="experience-date">2014.10 ~ 2017.05</div>
+                    <div class="experience-company">생활과학</div>
+                    <div class="experience-role">팀장</div>
+                    <div class="experience-desc">
+                        서비스 운영 및 UI/UX 기획
+                    </div>
+                </div>
+
+                <div class="experience-card fade-in">
+                    <div class="experience-date">2014.07 ~ 2014.10</div>
+                    <div class="experience-company">엔드스</div>
+                    <div class="experience-role">Designer</div>
+                    <div class="experience-desc">
+                        웹사이트 기획 및 설계
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section class="py-20 px-6 lg:px-12 border-t border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-16 fade-in">
+                <span class="section-label">/ 교육</span>
+            </div>
+
+            <div class="experience-card fade-in">
+                <div class="experience-company mb-2">계원예술대학교</div>
+                <div class="experience-role mb-4">디지털디자인학과</div>
+                <div class="experience-desc mb-3">
+                    2012.03 ~ 2014.02
+                </div>
+                <div class="experience-desc text-gray-400">
+                    학점: 3.99 / 4.5 · 수석졸업
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-6 lg:px-12 border-t border-white/5 bg-[#1a1a23]/50">
+        <div class="max-w-7xl mx-auto">
+            <div class="fade-in">
+                <span class="section-label">/ 연락처</span>
+                <h2 class="text-4xl font-bold text-white mt-4 mb-12">Let's Work Together</h2>
+
+                <div class="grid md:grid-cols-3 gap-8 mb-12">
+                    <div>
+                        <p class="text-gray-500 text-sm mb-2 uppercase tracking-wide">Email</p>
+                        <a href="mailto:oph_7@naver.com" class="text-xl font-semibold text-white hover:text-blue-400 transition">
+                            oph_7@naver.com
+                        </a>
+                    </div>
+
+                    <div>
+                        <p class="text-gray-500 text-sm mb-2 uppercase tracking-wide">Phone</p>
+                        <a href="tel:01077913933" class="text-xl font-semibold text-white hover:text-blue-400 transition">
+                            010 7791 3933
+                        </a>
+                    </div>
+
+                    <div>
+                        <p class="text-gray-500 text-sm mb-2 uppercase tracking-wide">Location</p>
+                        <p class="text-xl font-semibold text-white">
+                            Seoul, Korea
+                        </p>
+                    </div>
+                </div>
+
+                <div class="pt-8 border-t border-white/5">
+                    <p class="text-gray-500 text-sm">
+                        © 2025 Kwak Junched. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Hamburger menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when link is clicked
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(element => {
+            observer.observe(element);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor settings
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node (if needed in future)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# IDE
+.sublime-project
+.sublime-workspace
+
+# Environment
+.env
+.env.local
